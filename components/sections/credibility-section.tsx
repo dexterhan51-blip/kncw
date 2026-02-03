@@ -63,7 +63,7 @@ export function CredibilitySection() {
 
   const lawyerImages = ["/1.png", "/2.png", "/3.png", "/4.png"]
 
-  const placeImages = ["/office-interior.jpg"]
+  const placeImages = ["/office-interior.webp"]
 
   const [currentLawyerImage, setCurrentLawyerImage] = useState(0)
   const [currentPlaceImage, setCurrentPlaceImage] = useState(0)

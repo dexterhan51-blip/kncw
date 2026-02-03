@@ -37,7 +37,7 @@ export function SolutionSection() {
       {/* 배경 이미지 */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/kimand_solution.png)" }}
+        style={{ backgroundImage: "url(/kimand_solution.webp)" }}
       />
       {/* 흰색 투명 레이어 */}
       <div className="absolute inset-0 bg-white/85 dark:bg-black/70" />

@@ -173,7 +173,7 @@ export function WhyUsSection() {
             {/* 배경 이미지 */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: "url(/kimand_whyus.png)" }}
+              style={{ backgroundImage: "url(/kimand_whyus.webp)" }}
             />
             {/* 검은색 투명 레이어 */}
             <div className="absolute inset-0 bg-black/60" />

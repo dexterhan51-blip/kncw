@@ -1,3 +1,14 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "개인정보처리방침 | 법무법인 김앤파트너스",
+  description: "법무법인 김앤파트너스 개인정보 수집 및 이용 동의서. 창원개인회생, 창원개인파산 전문 법무법인의 개인정보처리방침입니다.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+}
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-background py-12 px-4">

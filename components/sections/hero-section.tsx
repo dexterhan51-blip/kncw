@@ -15,7 +15,7 @@ export function HeroSection() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/changwon-court-night.jpg"
+          src="/changwon-court-night.webp"
           alt="창원개인회생 창원개인파산 전문 법무법인 김앤파트너스 - 창원지방법원 인근"
           fill
           className="object-cover object-[85%_center] md:object-center"

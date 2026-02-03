@@ -1,4 +1,16 @@
+import type { Metadata } from "next"
 import { CorpHeroSection } from "@/components/sections/corp-hero-section"
+
+export const metadata: Metadata = {
+  title: "법인회생 전문 | 법무법인 김앤파트너스",
+  description: "법인회생, 기업회생 전문 법무법인. 회사 부채 해결, 법인파산 방지. 9,375건 채무 해결 경험, 무료상담 1577-1097",
+  keywords: "법인회생, 기업회생, 회사회생, 법인파산, 기업파산, 법무법인, 김앤파트너스",
+  openGraph: {
+    title: "법인회생 전문 | 법무법인 김앤파트너스",
+    description: "법인회생, 기업회생 전문 법무법인. 회사 부채 해결, 법인파산 방지.",
+    type: "website",
+  },
+}
 import { CorpProblemSection } from "@/components/sections/corp-problem-section"
 import { CorpSolutionSection } from "@/components/sections/corp-solution-section"
 import { SuccessCasesSection } from "@/components/sections/success-cases-section"

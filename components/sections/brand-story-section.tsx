@@ -6,7 +6,7 @@ export function BrandStorySection() {
     <section id="brand-story" className="relative py-20 px-4 md:py-32 overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url(/kimand_story.png)" }}
+        style={{ backgroundImage: "url(/kimand_story.webp)" }}
       />
       <div className="absolute inset-0 bg-white/50" />
       <div className="relative z-10">

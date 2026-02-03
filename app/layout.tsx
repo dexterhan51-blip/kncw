@@ -11,14 +11,42 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "법무법인 김앤파트너스 | 개인회생·파산 전문",
+  metadataBase: new URL('https://kimnpartners-law.com'),
+  title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
   description:
-    "무거운 빚에서 벗어나세요. 9,375명이 선택한 개인회생·파산 전문 법무법인. 80~90% 채무 탕감, 5일 내 독촉 중단, 1% 이내 기각률",
-  keywords: "개인회생, 개인파산, 채무조정, 빚탕감, 법무법인, 김앤파트너스, 변호사상담",
+    "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 5일 내 독촉 중단, 1% 이내 기각률. 무료상담 1577-1097",
+  keywords: "창원개인회생, 창원개인파산, 창원회생, 창원파산, 경남개인회생, 경남개인파산, 개인회생, 개인파산, 채무조정, 빚탕감, 법무법인, 김앤파트너스",
   openGraph: {
-    title: "법무법인 김앤파트너스 | 개인회생·파산 전문",
-    description: "무거운 빚에서 벗어나세요. 9,375명이 선택한 개인회생·파산 전문 법무법인",
+    title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
+    description: "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 무료상담 1577-1097",
     type: "website",
+    locale: "ko_KR",
+    siteName: "법무법인 김앤파트너스",
+    images: [
+      {
+        url: "/kimand_hero.webp",
+        width: 1200,
+        height: 630,
+        alt: "창원개인회생 창원개인파산 전문 법무법인 김앤파트너스",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
+    description: "창원개인회생, 창원개인파산 전문 법무법인. 9,375명 채무 해결, 80~90% 빚 탕감",
+    images: ["/kimand_hero.webp"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   icons: {
     icon: [

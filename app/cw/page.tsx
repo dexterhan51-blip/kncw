@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://kimnpartners.co.kr/kimand_hero.png",
+        url: "https://kimnpartners.co.kr/kimand_hero.webp",
         width: 1200,
         height: 630,
         alt: "창원개인회생 창원개인파산 전문 법무법인 김앤파트너스",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
     description:
       "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감",
-    images: ["https://kimnpartners.co.kr/kimand_hero.png"],
+    images: ["https://kimnpartners.co.kr/kimand_hero.webp"],
   },
   robots: {
     index: true,
@@ -72,7 +72,7 @@ const jsonLd = {
         "@id": "https://kimnpartners.co.kr/#website",
       },
       primaryImageOfPage: {
-        "@id": "https://kimnpartners.co.kr/kimand_hero.png",
+        "@id": "https://kimnpartners.co.kr/kimand_hero.webp",
       },
     },
     {
@@ -95,7 +95,7 @@ const jsonLd = {
         "@type": "ImageObject",
         url: "https://kimnpartners.co.kr/img_logo_f.svg",
       },
-      image: "https://kimnpartners.co.kr/kimand_hero.png",
+      image: "https://kimnpartners.co.kr/kimand_hero.webp",
       description: "창원개인회생, 창원개인파산, 경남 개인회생·파산 전문 법무법인",
       telephone: "1577-1097",
       priceRange: "$$",

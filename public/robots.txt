@@ -1,0 +1,10 @@
+# 법무법인 김앤파트너스 robots.txt
+# https://kimnpartners-law.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /test/
+
+# Sitemap
+Sitemap: https://kimnpartners-law.com/sitemap.xml
