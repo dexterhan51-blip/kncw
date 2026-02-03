@@ -4,7 +4,7 @@ import { neon } from "@neondatabase/serverless"
 const RESEND_API_KEY = process.env.RESEND_API_KEY
 const RESEND_SEND_TO = process.env.RESEND_SEND_TO ?? "knp02@naver.com"
 const DATABASE_URL = process.env.DATABASE_URL
-const ZAPIER_WEBHOOK_URL = process.env.ZAPIER_WEBHOOK_URL || "https://hooks.zapier.com/hooks/catch/25734027/uaa7kkr/"
+const ZAPIER_WEBHOOK_URL = process.env.ZAPIER_WEBHOOK_URL
 
 const sanitize = (value: unknown) => {
   if (typeof value === "string" && value.trim().length > 0) {
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "ZAPIER_WEBHOOK_URL이 설정되어 있지 않습니다." }, { status: 500 })
   }
 
-  console.log("[v0] Zapier webhook URL:", ZAPIER_WEBHOOK_URL)
+  console.log("[v0] Zapier webhook 전송 시작")
 
   try {
     const zapierResponse = await fetch(ZAPIER_WEBHOOK_URL, {
