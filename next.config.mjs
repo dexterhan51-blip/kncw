@@ -5,6 +5,12 @@ const nextConfig = {
   },
   images: {
     formats: ['image/webp', 'image/avif'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.cloudwaysapps.com',
+      },
+    ],
   },
 }
 
