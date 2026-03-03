@@ -14,7 +14,7 @@ import { Footer } from "@/components/sections/footer"
 export const metadata: Metadata = {
   title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
   description:
-    "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 무료상담 1577-1097",
+    "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 무료상담 1577-1291",
   keywords:
     "창원개인회생, 창원개인파산, 창원회생, 창원파산, 경남개인회생, 경남개인파산, 창원채무조정, 창원빚탕감, 김앤파트너스",
   alternates: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "창원개인회생 창원개인파산 전문 | 법무법인 김앤파트너스",
     description:
-      "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 무료상담 1577-1097",
+      "창원개인회생, 창원개인파산 전문 법무법인. 창원지방법원 도보 1분, 9,375명 채무 해결. 80~90% 빚 탕감, 무료상담 1577-1291",
     url: "https://kimnpartners.co.kr/cw",
     siteName: "법무법인 김앤파트너스",
     locale: "ko_KR",
@@ -97,7 +97,7 @@ const jsonLd = {
       },
       image: "https://kimnpartners.co.kr/kimand_hero.webp",
       description: "창원개인회생, 창원개인파산, 경남 개인회생·파산 전문 법무법인",
-      telephone: "1577-1097",
+      telephone: "1577-1291",
       priceRange: "$$",
       address: {
         "@type": "PostalAddress",

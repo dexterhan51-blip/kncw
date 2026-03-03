@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-const PHONE_NUMBER = "1577-1097"
+const PHONE_NUMBER = "1577-1291"
 
 export default function FloatingPhoneButton() {
   return (

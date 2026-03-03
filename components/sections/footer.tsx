@@ -48,7 +48,7 @@ export function Footer() {
         <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="mb-2 font-semibold text-card-foreground">대표번호</p>
-            <p className="text-2xl font-bold text-[#1c4e6f]">1577-1097</p>
+            <p className="text-2xl font-bold text-[#1c4e6f]">1577-1291</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link

@@ -141,14 +141,14 @@ export default async function SinglePostPage({ params }: PageProps) {
             블로그 목록으로 돌아가기
           </Link>
           <a
-            href="tel:1577-1097"
+            href="tel:1577-1291"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5"
             style={{
               backgroundColor: "#4A90B5",
               color: "#ffffff",
             }}
           >
-            1577-1097 상담 예약
+            1577-1291 상담 예약
           </a>
         </div>
       </article>
@@ -168,14 +168,14 @@ export default async function SinglePostPage({ params }: PageProps) {
           9,375건 이상의 성공 데이터를 보유한 전문가가 상담해 드립니다.
         </p>
         <a
-          href="tel:1577-1097"
+          href="tel:1577-1291"
           className="inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:opacity-90"
           style={{
             backgroundColor: "#ffffff",
             color: "#1c4e6f",
           }}
         >
-          1577-1097 전화 상담하기
+          1577-1291 전화 상담하기
         </a>
       </section>
 

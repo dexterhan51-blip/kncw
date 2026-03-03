@@ -47,7 +47,7 @@ const jsonLd = {
       },
       image: "https://kimnpartners-law.com/kimand_hero.webp",
       description: "창원개인회생, 창원개인파산, 경남 개인회생·파산 전문 법무법인",
-      telephone: "1577-1097",
+      telephone: "1577-1291",
       priceRange: "$$",
       address: {
         "@type": "PostalAddress",

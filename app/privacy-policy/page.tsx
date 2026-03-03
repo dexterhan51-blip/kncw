@@ -122,7 +122,7 @@ export default function PrivacyPolicyPage() {
               <p className="font-semibold">개인정보관리책임자</p>
               <p>성 명 : 김민수</p>
               <p>전자우편 : knps@kimnpartners.co.kr</p>
-              <p>전화번호 : 1577-1097</p>
+              <p>전화번호 : 1577-1291</p>
             </div>
           </section>
 

@@ -35,7 +35,7 @@ export function CtaSection() {
             size="lg"
             variant="outline"
             className="border-2 border-white bg-transparent w-full sm:w-auto px-4 py-8 md:px-12 md:py-10 text-xl md:text-2xl font-bold text-white hover:bg-white cursor-pointer hover:text-[#9d5443]"
-            onClick={() => (window.location.href = "tel:1577-1097")}
+            onClick={() => (window.location.href = "tel:1577-1291")}
           >
             <Phone className="mr-2 h-5 w-5" />
             전화 상담하기
