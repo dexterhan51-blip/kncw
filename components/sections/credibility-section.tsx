@@ -10,6 +10,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowRight,
+  Pause,
+  Play,
 } from "lucide-react"
 import { ConsultationModal } from "@/components/consultation-modal"
 import { AnimatedCounter } from "@/components/animated-counter"
@@ -70,28 +72,49 @@ export function CredibilitySection() {
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+  const [isLawyerCarouselPlaying, setIsLawyerCarouselPlaying] = useState(true)
 
   const resetAutoPlay = () => {
     if (autoPlayRef.current) {
       clearInterval(autoPlayRef.current)
     }
+    if (!isLawyerCarouselPlaying) return
     autoPlayRef.current = setInterval(() => {
       setCurrentLawyerImage((prev) => (prev + 1) % lawyerImages.length)
     }, 5000)
   }
 
-  useEffect(() => {
-    resetAutoPlay()
+  const toggleLawyerCarouselPlay = () => {
+    setIsLawyerCarouselPlaying((prev) => {
+      const next = !prev
+      if (next) {
+        // Restart auto-play
+        if (autoPlayRef.current) clearInterval(autoPlayRef.current)
+        autoPlayRef.current = setInterval(() => {
+          setCurrentLawyerImage((p) => (p + 1) % lawyerImages.length)
+        }, 5000)
+      } else {
+        // Pause
+        if (autoPlayRef.current) {
+          clearInterval(autoPlayRef.current)
+          autoPlayRef.current = null
+        }
+      }
+      return next
+    })
+  }
 
-    const placeInterval = setInterval(() => {
-      setCurrentPlaceImage((prev) => (prev + 1) % placeImages.length)
-    }, 5000)
+  useEffect(() => {
+    if (isLawyerCarouselPlaying) {
+      resetAutoPlay()
+    }
+
+    // No place interval needed - only 1 image (static display)
 
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current)
-      clearInterval(placeInterval)
     }
-  }, [lawyerImages.length, placeImages.length])
+  }, [lawyerImages.length, isLawyerCarouselPlaying])
 
   const minSwipeDistance = 50
 
@@ -180,7 +203,7 @@ export function CredibilitySection() {
         })}
       </div>
 
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex items-center justify-center gap-2 mt-4">
         {lawyerImages.map((_, index) => (
           <button
             key={index}
@@ -194,36 +217,62 @@ export function CredibilitySection() {
             aria-label={`변호사 ${index + 1}`}
           />
         ))}
+        <button
+          onClick={toggleLawyerCarouselPlay}
+          className="ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-muted hover:bg-muted-foreground/20 transition-colors"
+          aria-label={isLawyerCarouselPlaying ? "자동 재생 일시정지" : "자동 재생 시작"}
+        >
+          {isLawyerCarouselPlaying ? (
+            <Pause className="h-3.5 w-3.5 text-muted-foreground" />
+          ) : (
+            <Play className="h-3.5 w-3.5 text-muted-foreground" />
+          )}
+        </button>
       </div>
     </div>
   )
 
-  const PlaceCarousel = ({ className = "" }: { className?: string }) => (
-    <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-muted ${className}`}>
-      {placeImages.map((image, index) => {
-        const isActive = index === currentPlaceImage
-        const isPrev = index === (currentPlaceImage - 1 + placeImages.length) % placeImages.length
-
-        return (
+  const PlaceCarousel = ({ className = "" }: { className?: string }) => {
+    // Single image: render as static image without carousel controls
+    if (placeImages.length === 1) {
+      return (
+        <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-muted ${className}`}>
           <div
-            key={image}
-            className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
-              isActive
-                ? "opacity-100 translate-x-0"
-                : isPrev
-                  ? "opacity-0 -translate-x-full"
-                  : "opacity-0 translate-x-full"
-            }`}
-          >
+            className="h-full w-full bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${placeImages[0]})` }}
+          />
+        </div>
+      )
+    }
+
+    // Multiple images: carousel mode
+    return (
+      <div className={`relative aspect-[4/3] overflow-hidden rounded-xl bg-muted ${className}`}>
+        {placeImages.map((image, index) => {
+          const isActive = index === currentPlaceImage
+          const isPrev = index === (currentPlaceImage - 1 + placeImages.length) % placeImages.length
+
+          return (
             <div
-              className="h-full w-full bg-cover bg-center bg-no-repeat"
-              style={{ backgroundImage: `url(${image})` }}
-            />
-          </div>
-        )
-      })}
-    </div>
-  )
+              key={image}
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
+                isActive
+                  ? "opacity-100 translate-x-0"
+                  : isPrev
+                    ? "opacity-0 -translate-x-full"
+                    : "opacity-0 translate-x-full"
+              }`}
+            >
+              <div
+                className="h-full w-full bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url(${image})` }}
+              />
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
 
   return (
     <section id="credibility" className="bg-background py-16 px-4">

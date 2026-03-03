@@ -6,7 +6,7 @@ const PHONE_NUMBER = "1577-1291"
 
 export default function FloatingPhoneButton() {
   return (
-    <div className="fixed bottom-22 right-4 z-[9999] md:bottom-24 md:right-6">
+    <div className="fixed bottom-[7.5rem] right-4 z-[9999] md:bottom-32 md:right-6">
       <a
         href={`tel:${PHONE_NUMBER}`}
         aria-label="대표 전화로 연결"

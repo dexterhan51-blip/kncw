@@ -1,11 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useEffect, useState, useRef, useCallback } from "react"
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function VideoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   const videos = [
     {
@@ -50,13 +52,35 @@ export function VideoCarousel() {
 
   const currentVideo = videos[currentIndex]
 
-  useEffect(() => {
-    const timer = setInterval(() => {
+  const startAutoPlay = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % videos.length)
-    }, 3000)
+    }, 8000)
+  }, [videos.length])
 
-    return () => clearInterval(timer)
+  const stopAutoPlay = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current)
+      timerRef.current = null
+    }
   }, [])
+
+  const togglePlayPause = () => {
+    if (isPlaying) {
+      stopAutoPlay()
+    } else {
+      startAutoPlay()
+    }
+    setIsPlaying((prev) => !prev)
+  }
+
+  useEffect(() => {
+    if (isPlaying) {
+      startAutoPlay()
+    }
+    return () => stopAutoPlay()
+  }, [isPlaying, startAutoPlay, stopAutoPlay])
 
   return (
     <div className="relative mx-auto max-w-3xl">
@@ -77,7 +101,7 @@ export function VideoCarousel() {
           <ChevronLeft className="h-5 w-5" />
         </Button>
 
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           {videos.map((_, index) => (
             <button
               key={index}
@@ -89,6 +113,18 @@ export function VideoCarousel() {
             />
           ))}
         </div>
+
+        <button
+          onClick={togglePlayPause}
+          className="flex h-8 w-8 items-center justify-center rounded-full bg-muted hover:bg-muted-foreground/20 transition-colors"
+          aria-label={isPlaying ? "자동 재생 일시정지" : "자동 재생 시작"}
+        >
+          {isPlaying ? (
+            <Pause className="h-4 w-4 text-muted-foreground" />
+          ) : (
+            <Play className="h-4 w-4 text-muted-foreground" />
+          )}
+        </button>
 
         <Button variant="outline" size="icon" onClick={nextVideo} className="h-10 w-10 rounded-full bg-transparent">
           <ChevronRight className="h-5 w-5" />

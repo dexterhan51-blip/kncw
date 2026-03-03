@@ -8,6 +8,7 @@ const KAKAO_CHAT_URL = "https://pf.kakao.com/_uxmxgsK/chat?entry=new"
 export default function KakaoTalkChatButton() {
   return (
     <div className="fixed bottom-4 right-4 z-[9999] md:bottom-6 md:right-6">
+      {/* Kakao button stays at bottom; Phone button is positioned above with sufficient gap */}
       <Link
         href={KAKAO_CHAT_URL}
         target="_blank"

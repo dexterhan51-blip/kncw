@@ -4,13 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Quote } from "lucide-react"
 import { ConsultationModal } from "@/components/consultation-modal"
 import { ScrollReveal } from "@/components/scroll-reveal"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { VideoCarousel } from "@/components/video-carousel"
 
 export function SuccessCasesSection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set())
   const [hoveredCards, setHoveredCards] = useState<Set<number>>(new Set())
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+
+  useEffect(() => {
+    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  }, [])
 
   const toggleCard = (index: number) => {
     setFlippedCards((prev) => {
@@ -159,122 +164,160 @@ export function SuccessCasesSection() {
             <br />
             생생한 후기를 확인하실 수 있습니다.
           </p>
+          <p className="mb-6 text-center text-sm text-muted-foreground/70 md:hidden">
+            탭하여 후기 보기
+          </p>
         </ScrollReveal>
 
         <div className="mb-12 grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {cases.map((caseItem, index) => (
-            <ScrollReveal key={index} delay={index * 100}>
-              <div
-                className={`group relative h-[400px] cursor-pointer ${index >= 4 ? "hidden md:block" : ""}`}
-                style={{ perspective: "1000px" }}
-                onClick={() => toggleCard(index)}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave(index)}
-              >
-                <div
-                  className="relative h-full w-full transition-transform duration-500"
-                  style={{
-                    transformStyle: "preserve-3d",
-                    transform: flippedCards.has(index) || hoveredCards.has(index) ? "rotateY(180deg)" : "rotateY(0deg)",
-                  }}
-                >
-                  {/* 카드 앞면 */}
-                  <div
-                    className="absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
-                    style={{ backfaceVisibility: "hidden" }}
-                  >
-                    {/* 탕감률 - 오른쪽 위 */}
-                    {caseItem.type === "bankruptcy" ? (
-                      <div className="absolute right-4 top-4">
-                        <div className="rounded-lg bg-[#9d5443] px-4 py-2">
-                          <span className="text-base font-bold text-white whitespace-nowrap">채무 전액 면책</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="absolute right-4 top-4">
-                        <div className="rounded-lg bg-[#9d5443] px-4 py-2">
-                          <span className="text-lg font-bold text-white">
-                            탕감률 {caseItem.reliefRate?.toFixed(2)}%
-                          </span>
-                        </div>
-                      </div>
-                    )}
+          {cases.map((caseItem, index) => {
+            const isFlipped = flippedCards.has(index)
+            const isHovered = hoveredCards.has(index)
 
-                    {/* 제목 */}
-                    <h3 className="mb-4 pr-20 text-xl font-bold text-left text-foreground">{caseItem.title}</h3>
-
-                    {/* 상황 및 결과 */}
-                    <div className="mb-4 space-y-2 text-left mt-1">
-                      <p className="text-lg md:text-lg font-medium text-trust">{caseItem.situation}</p>
-                      <p className="text-lg md:text-lg font-semibold" style={{ color: "#1c4e6f" }}>
-                        {caseItem.result}
-                      </p>
-                      <p className="text-sm text-muted-foreground">{caseItem.court}</p>
-                    </div>
-
-                    {/* 금액 정보 */}
-                    {caseItem.type === "bankruptcy" ? (
-                      <div className="mt-auto space-y-3 text-left">
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">예납명령</p>
-                          <p className="text-sm font-medium text-foreground">{caseItem.depositOrder}</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">총 채무</p>
-                          <p className="text-lg font-bold text-foreground">{caseItem.totalDebt.toLocaleString()}원</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">면책채무액</p>
-                          <p className="text-lg font-bold text-trust">
-                            {caseItem.dischargedAmount?.toLocaleString()}원
-                          </p>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="mt-auto space-y-3 text-left">
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">총 채무</p>
-                          <p className="text-lg font-bold text-foreground">{caseItem.totalDebt.toLocaleString()}원</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">총 변제금</p>
-                          <p className="text-lg font-bold text-foreground">
-                            {caseItem.totalRepayment?.toLocaleString()}원
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">월 변제금</p>
-                          <p className="text-lg font-bold text-foreground">
-                            {caseItem.monthlyRepayment?.toLocaleString()}원 / {caseItem.repaymentMonths}개월
-                          </p>
-                        </div>
-                        <div className="flex items-center justify-between gap-4">
-                          <p className="text-sm text-muted-foreground">탕감액</p>
-                          <p className="text-lg font-bold text-trust">{formatReliefAmount(caseItem.reliefAmount!)}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 카드 뒷면 - Testimony */}
-                  <div
-                    className="absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
-                    style={{
-                      backfaceVisibility: "hidden",
-                      transform: "rotateY(180deg)",
-                    }}
-                  >
-                    <div className="flex h-full flex-col justify-center text-center px-4">
-                      <Quote className="mb-4 mx-auto h-8 w-8 text-trust" />
-                      <p className="text-lg leading-relaxed text-card-foreground text-left md:text-center">
-                        {caseItem.testimony}
-                      </p>
+            const frontContent = (
+              <>
+                {/* 탕감률 - 오른쪽 위 */}
+                {caseItem.type === "bankruptcy" ? (
+                  <div className="absolute right-4 top-4">
+                    <div className="rounded-lg bg-[#9d5443] px-4 py-2">
+                      <span className="text-base font-bold text-white whitespace-nowrap">채무 전액 면책</span>
                     </div>
                   </div>
+                ) : (
+                  <div className="absolute right-4 top-4">
+                    <div className="rounded-lg bg-[#9d5443] px-4 py-2">
+                      <span className="text-lg font-bold text-white">
+                        탕감률 {caseItem.reliefRate?.toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* 제목 */}
+                <h3 className="mb-4 pr-20 text-xl font-bold text-left text-foreground">{caseItem.title}</h3>
+
+                {/* 상황 및 결과 */}
+                <div className="mb-4 space-y-2 text-left mt-1">
+                  <p className="text-lg md:text-lg font-medium text-trust">{caseItem.situation}</p>
+                  <p className="text-lg md:text-lg font-semibold" style={{ color: "#1c4e6f" }}>
+                    {caseItem.result}
+                  </p>
+                  <p className="text-sm text-muted-foreground">{caseItem.court}</p>
                 </div>
+
+                {/* 금액 정보 */}
+                {caseItem.type === "bankruptcy" ? (
+                  <div className="mt-auto space-y-3 text-left">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">예납명령</p>
+                      <p className="text-sm font-medium text-foreground">{caseItem.depositOrder}</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">총 채무</p>
+                      <p className="text-lg font-bold text-foreground">{caseItem.totalDebt.toLocaleString()}원</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">면책채무액</p>
+                      <p className="text-lg font-bold text-trust">
+                        {caseItem.dischargedAmount?.toLocaleString()}원
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-auto space-y-3 text-left">
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">총 채무</p>
+                      <p className="text-lg font-bold text-foreground">{caseItem.totalDebt.toLocaleString()}원</p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">총 변제금</p>
+                      <p className="text-lg font-bold text-foreground">
+                        {caseItem.totalRepayment?.toLocaleString()}원
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">월 변제금</p>
+                      <p className="text-lg font-bold text-foreground">
+                        {caseItem.monthlyRepayment?.toLocaleString()}원 / {caseItem.repaymentMonths}개월
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground">탕감액</p>
+                      <p className="text-lg font-bold text-trust">{formatReliefAmount(caseItem.reliefAmount!)}</p>
+                    </div>
+                  </div>
+                )}
+              </>
+            )
+
+            const backContent = (
+              <div className="flex h-full flex-col justify-center text-center px-4">
+                <Quote className="mb-4 mx-auto h-8 w-8 text-trust" />
+                <p className="text-lg leading-relaxed text-card-foreground text-left md:text-center">
+                  {caseItem.testimony}
+                </p>
               </div>
-            </ScrollReveal>
-          ))}
+            )
+
+            return (
+              <ScrollReveal key={index} delay={index * 100}>
+                <div
+                  className={`group relative h-[400px] cursor-pointer ${index >= 4 ? "hidden md:block" : ""}`}
+                  style={{ perspective: prefersReducedMotion ? "none" : "1000px" }}
+                  onClick={() => toggleCard(index)}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={() => handleMouseLeave(index)}
+                >
+                  {prefersReducedMotion ? (
+                    /* Reduced motion fallback: opacity-based toggle instead of 3D flip */
+                    <div className="relative h-full w-full">
+                      <div
+                        className={`absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-opacity duration-300 ${
+                          isFlipped ? "opacity-0 pointer-events-none" : "opacity-100"
+                        }`}
+                      >
+                        {frontContent}
+                      </div>
+                      <div
+                        className={`absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-opacity duration-300 ${
+                          isFlipped ? "opacity-100" : "opacity-0 pointer-events-none"
+                        }`}
+                      >
+                        {backContent}
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className="relative h-full w-full transition-transform duration-500"
+                      style={{
+                        transformStyle: "preserve-3d",
+                        transform: isFlipped || isHovered ? "rotateY(180deg)" : "rotateY(0deg)",
+                      }}
+                    >
+                      {/* 카드 앞면 */}
+                      <div
+                        className="absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
+                        style={{ backfaceVisibility: "hidden" }}
+                      >
+                        {frontContent}
+                      </div>
+
+                      {/* 카드 뒷면 - Testimony */}
+                      <div
+                        className="absolute inset-0 flex flex-col rounded-2xl border border-border bg-card p-6 shadow-sm"
+                        style={{
+                          backfaceVisibility: "hidden",
+                          transform: "rotateY(180deg)",
+                        }}
+                      >
+                        {backContent}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </ScrollReveal>
+            )
+          })}
         </div>
 
         <ScrollReveal>

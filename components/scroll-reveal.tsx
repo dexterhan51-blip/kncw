@@ -15,6 +15,13 @@ export function ScrollReveal({ children, delay = 0, className = '' }: ScrollReve
     const element = ref.current
     if (!element) return
 
+    // Respect prefers-reduced-motion: skip animation entirely
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      element.classList.add('reveal-visible')
+      return
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

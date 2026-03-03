@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { MessageSquare, FileText, Send, Scale, CheckCircle2, ArrowRight } from "lucide-react"
 import { ConsultationModal } from "@/components/consultation-modal"
@@ -9,6 +9,24 @@ import { ScrollReveal } from "@/components/scroll-reveal"
 export function ProcessSection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<"rehabilitation" | "bankruptcy">("rehabilitation")
+  const [activeMobileStep, setActiveMobileStep] = useState(0)
+  const stepsScrollRef = useRef<HTMLDivElement>(null)
+
+  const handleMobileScroll = useCallback(() => {
+    const container = stepsScrollRef.current
+    if (!container) return
+    const scrollLeft = container.scrollLeft
+    const cardWidth = container.clientWidth * 0.85 + 16 // min-w-[85vw] + gap-4
+    const newIndex = Math.round(scrollLeft / cardWidth)
+    setActiveMobileStep(Math.min(newIndex, 4)) // 5 steps total (0-4)
+  }, [])
+
+  useEffect(() => {
+    const container = stepsScrollRef.current
+    if (!container) return
+    container.addEventListener("scroll", handleMobileScroll, { passive: true })
+    return () => container.removeEventListener("scroll", handleMobileScroll)
+  }, [handleMobileScroll])
 
   const steps1to3 = [
     {
@@ -59,9 +77,8 @@ export function ProcessSection() {
   const allSteps = [...steps1to3, ...steps4to5]
 
   const scrollToStep = (stepIndex: number) => {
-    const stepsScrollRef = document.querySelector("[data-steps-scroll]") as HTMLDivElement
-    if (!stepsScrollRef) return
-    const container = stepsScrollRef
+    const container = stepsScrollRef.current
+    if (!container) return
     const cardWidth = container.clientWidth * 0.85 + 16
     container.scrollTo({ left: cardWidth * stepIndex, behavior: "smooth" })
   }
@@ -97,7 +114,7 @@ export function ProcessSection() {
         </ScrollReveal>
 
         <div className="relative mb-10 md:hidden">
-          <div data-steps-scroll className="flex gap-4 overflow-x-auto overflow-y-hidden pb-6 snap-x snap-mandatory">
+          <div ref={stepsScrollRef} className="flex gap-4 overflow-x-auto overflow-y-hidden pb-4 snap-x snap-mandatory scrollbar-hide">
             {allSteps.map((step, index) => (
               <ScrollReveal key={`${step.number}-${index}`} delay={index * 120}>
                 <div className="relative min-w-[85vw] md:min-w-0 md:w-auto flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg snap-center">
@@ -128,6 +145,19 @@ export function ProcessSection() {
                   </ul>
                 </div>
               </ScrollReveal>
+            ))}
+          </div>
+          {/* Mobile scroll dot indicators */}
+          <div className="flex justify-center gap-2 mt-2">
+            {allSteps.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToStep(index)}
+                className={`h-2 rounded-full transition-all ${
+                  index === activeMobileStep ? "w-6 bg-trust" : "w-2 bg-trust/30"
+                }`}
+                aria-label={`Step ${index + 1}로 이동`}
+              />
             ))}
           </div>
         </div>
